@@ -1,0 +1,355 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="description" content="">
+      <title>Abstract Visualization</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <!-- jQueryUI styling -->
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <!-- Tooltip styling -->
+      <!-- <link rel="stylesheet" href="css/d3-tip.css"> -->
+      <!-- Custom styling -->
+      <link rel="stylesheet" href="css/style.css">
+   </head>
+   <body id="main">
+      <div class="container">
+         <!--.................Part A code starts...............-->
+         <div id="part-A-container">
+            <div class="general_instructions">
+               <h5 class="text-center help-msg" style="padding-bottom:0;">Please answer the following questions (click on the circle or the associated text to answer). We will begin with a few general questions, then move on to more specific ones.</h5>
+               <h5 class="text-center important" style="font-weight:bold;"> All question are mandatory. Please do not refresh the browser throughout the study.</h5>
+            </div>
+            <!--Auto fill the Prolific id-->
+            <form id="pid-form" class="align_center">
+               <span>Please enter your Prolific ID here and press <span style = "font-weight:bold;font-size:15px;">Submit</span></span>
+               <input type="text" id="input_name" size="10" maxlength="15" style="width:200px;" required/>
+               <input type="submit" id="submit" value="Submit" required>
+            </form>
+            <!--Demographic and empathy form-->
+            <form action="" id="Part_A_forms" name="submit-to-google-sheet_A">
+               <div id = "demographic_ques">
+
+               <div id="part_A_pid" class="align_center help-msg">
+                  <input type="hidden" id="timestamp_A_1_entry" name="Timestamp_A" />
+                  <input type="hidden" id="timestamp_A" name="Timestamp_B" />
+
+                  <label for="pid">Your Prolofic ID is : </label>
+                  <input type="text" id="pid" placeholder="Prolofic id" name="Prolofic_id" readonly style="background-color:lightgray; width:200px;margin:5px 0;" required>
+               </div>
+               <div class="" id="demographic_form">
+                  <div id="age_wrapper"></div>
+                  <div id="education_wrapper"></div>
+                  <div id="discipline_wrapper"></div>
+                  </div>
+               </div>
+
+                  <h5 class="text-center help-msg">Please indicate the extent to which you agree with the following statements.</h5>
+                  <div class="">
+                     <div class="empathy_form_container empathy_form_size" id="pre_empathy_form">
+                        <ol id="empathy_form_list"></ol>
+                     </div>
+                  </div>
+               <p class="important align_center">Before you click submit , please recheck your Prolific ID at the top of the page <a href="#pid-form">
+                  <button type="button" class=" up  btn-sm">
+                  <span class="glyphicon glyphicon-circle-arrow-up"></span> Up </button>
+                  </a>
+               </p>
+               <div class="main-form-submit align_center">
+                  <button type="submit" id="part_A_Submit" class=" btn btn-success">Submit</button>
+                  <span id="error-msg_A" class="important" style="display:none;"> Please fill all fields and resubmit.</span>
+               </div>
+            </form>
+         </div>
+         <!--.................Part B code starts...............-->
+         <div id="part-B-container">
+            <div id="victim_story" class="col-md-2 tool-tip">
+               <div class="text-center">
+                  <h5 class="" style="font-weight:bold;margin-bottom:8px;display:inline-block">Victim Story</h5>
+                  <span style="padding:0;font-size:12px;font-weight:bold;color:blue;" class="text-center">(Click on an incident)</span>
+                  </div>           
+                </div>
+            <div id="metaphoric_viz" class="col-md-8 svg-container">
+               <div id="BtnContainer">
+                  <div class='filter' style="display:inline-block;">
+                     <span class="help-msg">Group By : </span>
+                     <button class="btn button" id="cleantarget_new" value=0 onclick="count_clicks(id)"> Victim Rank</button>
+                     <button class="btn button" id="perpetrator_new" value=0 onclick="count_clicks(id)"> Harasser Rank</button>
+                     <button class="btn button" id="gendersquash" value=0 onclick="count_clicks(id)"> Harasser Gender</button>
+                     <button class="btn button" id="itype" value=0 onclick="count_clicks(id)">Victim Institution Type</button>
+                     <button class="btn button" id="cleandiscipline_new" value=0 onclick="count_clicks(id)">Victim Field of Study</button>
+                  </div>
+                  <div class="rest" style="display:inline-block; float:right;">
+                     <button class="btn button active" id="all" value=0 onclick="count_clicks(id)"> Reset</button>
+                  </div>
+               </div>
+            </div>
+            <div id="legend" class="col-md-2">
+               <!-- Button trigger viz-overview modal -->
+               <div class="align_center">
+                  <h5 style="display:inline-block;font-weight:bold;" class="align-center;">How to Read it</h5>
+                  <button type="button" class="about-button" data-toggle="modal" data-target="#overview-modal"> ? </button>
+                  <img class="legend_img" src="image/legend2.svg" alt="legend" width="" height="520px" />
+               </div>
+            </div>
+            <form action="" id="viz_tasks" name="submit-to-google-sheet_B0">
+               <div id="viz_questions">
+                     <h5 class="text-center help-msg">Please answer the following questions by using the <span style = "color:black;font-weight: bold;">grey buttons</span> on the top to group incidents and clicking on incidents if needed.
+                  </h5>
+                  <input type="hidden" id="timestamp_B_0_entry" name="Timestamp_A" />
+                  <input type="hidden" id="timestamp_B_0" name="Timestamp_B" />
+                  <input type="hidden" id="pid_B" name="Prolofic_id" required />
+                  <input type="hidden" id="no_story_clicked_pre" name="story_clicks" />
+                  <input type="hidden" id="story_clicked_ids_pre" name="clicked_story_ids" />
+                  <input type="hidden" id="victim_status_clicks_pre" name="victim_status_clicks" />
+                  <input type="hidden" id="harasser_status_clicks_pre" name="harasser_status_clicks" />
+                  <input type="hidden" id="h_gender_clicks_pre" name="h_gender_clicks" />
+                  <input type="hidden" id="itype_clicks_pre" name="itype_clicks" />
+                  <input type="hidden" id="discipline_clicks_pre" name="discipline_clicks" />
+                  <input type="hidden" id="reset_clicks_pre" name="reset_clicks" />
+                  <ol>
+                     <li>
+                        <p>What is the <strong>rank of the victim</strong> reporting the majority of sexual harassment incidents? </p>
+                        <div class="form-check-inline viz_task_wrapper">
+                           <input type="radio" id="quest1_op1" name="viz_question1" value="Undergraduate Student" required>
+                           <label for="quest1_op1">Undergraduate Students</label>
+                           <input type="radio" id="quest1_op2" name="viz_question1" value="Graduate Student" required>
+                           <label for="quest1_op2">Graduate Students</label>
+                           <input type="radio" id="quest1_op3" name="viz_question1" value="Faculty" required>
+                           <label for="quest1_op3">Faculty</label>
+                           <input type="radio" id="quest1_op4" name="viz_question1" value="Staff" required>
+                           <label for="quest1_op4">Staff</label>
+                           <input type="radio" id="quest1_op5" name="viz_question1" value="Chair/Dean/Head" required>
+                           <label for="quest1_op5">Chair/Dean/Head</label>
+                        </div>
+                     </li>
+                     <li>
+                        <p>Victims in the following <strong>field of study</strong> reported the second highest number of incidents:
+                        </p>
+                        <div class="form-check-inline viz_task_wrapper">
+                           <input type="radio" id="quest2_op1" name="viz_question2" value="Humanities" required>
+                           <label for="quest2_op1">Humanities</label>
+                           <input type="radio" id="quest2_op2" name="viz_question2" value="Social sciences" required>
+                           <label for="quest2_op2">Social Sciences</label>
+                           <input type="radio" id="quest2_op3" name="viz_question2" value="Natural sciences" required>
+                           <label for="quest2_op3">Natural Sciences</label>
+                           <input type="radio" id="quest2_op4" name="viz_question2" value="Formal sciences" required>
+                           <label for="quest2_op4">Formal Sciences</label>
+                           <input type="radio" id="quest2_op5" name="viz_question2" value="Applied sciences" required>
+                           <label for="quest2_op5">Applied Sciences</label>
+                        </div>
+                     </li>
+                     <li>
+                        <p>Click and read the <strong style=" text-shadow: 1px 1px #39FF14;">highlighted</strong> incident to find out the <strong> hierarchy level </strong>the harasser had in relation to the victim.</p>
+                        <div class="form-check-inline viz_task_wrapper " style = width:45%;>
+                           <span class = "bold" style = "margin-left:3px;">Harraser had</span>
+                           <input type="radio" id="quest3_op1" name="viz_question3" value="Lower Position" required>
+                           <label for="quest3_op1">a lower position</label>
+                           <input type="radio" id="quest3_op2" name="viz_question3" value="Equal Position" required>
+                           <label for="quest3_op2">an equal position</label>
+                           <input type="radio" id="quest3_op3" name="viz_question3" value="Higher Position" required>
+                           <label for="quest3_op3">a higher position</label>
+                           <div class="" style = "display:inline-block; float:right;" >
+                              <button type="submit" id="Part_B0_submit" class=" btn btn-success" data-toggle="modal">submit</button>
+                              <span id="error-msg_B0" class="important" style="display:none;"> Please fill all fields.</span>
+                           </div>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+            </form>
+            <!--<button class="btn button " id= "nextTo-C" onclick="" >Next - Part C</button>-->
+            <form id="viz_facts_byUser" style="display:none" name="submit-to-google-sheet_B1">
+               <input type="hidden" id="timestamp_B_1_entry" name="Timestamp_A" />
+               <input type="hidden" id="pid_feedback" name="Prolofic_id" required />
+               <input type="hidden" id="timestamp_B_1_exit" name="Timestamp_B" />
+               <input type="hidden" id="no_story_clicked" name="story_clicks" />
+               <input type="hidden" id="story_clicked_ids" name="clicked_story_ids" />
+               <input type="hidden" id="victim_status_clicks" name="victim_status_clicks" />
+               <input type="hidden" id="harasser_status_clicks" name="harasser_status_clicks" />
+               <input type="hidden" id="h_gender_clicks" name="h_gender_clicks" />
+               <input type="hidden" id="itype_clicks" name="itype_clicks" />
+               <input type="hidden" id="discipline_clicks" name="discipline_clicks" />
+               <input type="hidden" id="reset_clicks" name="reset_clicks" />
+               <div>
+                  <label for="viz_fact_learned">Please describe a few interesting things you have learned or discovered while exploring the visualization in the box below. </label>
+                  <textarea id="viz_fact_learned" name="viz_fact_learned" rows="5" cols="50" required></textarea>
+               </div>
+               <div class="main-form-submit align_center">
+                  <button type="submit" id="Part_B_submit" class=" btn btn-success">I am done with the visualization</button>
+                  <span id="error-msg_B1" class="important" style="display:none;"> Please fill what you learned during visualization exploration.</span>
+               </div>
+            </form>
+         </div>
+         <!--.................Part C code starts...............-->
+         <div id="part-C-container">
+            <p class="text-center help-msg" style = "font-size:16px;color:green;padding-bottom:8px;">Hey ! you are almost there. This is the last part of the study.</p>
+            <h5 class="text-center help-msg">Please indicate the extent to which you agree with the following statement.</h5>
+            <form action="" id="part-c-forms" name='submit-to-google-sheet_C'>
+               <div class="">
+                  <input type="hidden" id="timestamp_C_entry" name="Timestamp_A" />
+                  <input type="hidden" id="timestamp_C" name="Timestamp_B" />
+                  <input type="hidden" id="pid_C" name="Prolofic_id" required />
+                  <div class="eng_form_container  eng_form_size row" id="pre_empathy_form">
+                     <ol id="eng_form_list"></ol>
+                  </div>
+                  <h5 class="text-center help-msg">Please indicate the extent to which you agree with the following statement again.</h5>
+                  <div class="empathy_postform_container empathy_form_size row " id="pre_empathy_form">
+                     <ol id="empathy_postform_list"></ol>
+                  </div>
+                  <div class="main-form-submit align_center">
+                     <button type="submit" id="part-C" class=" btn btn-success">submit</button>
+                     <span id="error-msg_C" class="important" style="display:none;"> Please fill all fields and resubmit.</span>
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div id="return_to_prolofic" style="display:none; margin:200px 0;">
+            <h5 class="text-center help-msg">Thank you for participating, please click on the button below to complete the experiment.</h5>
+            <a href="https://app.prolific.co/submissions/complete?cc=4FEA6237" >
+            <button  class="button_center btn btn-success" style="width:185px; margin-top: 20px;">Return to Prolofic</button>
+            </a>
+         </div>
+         <!-- Overview Modal -->
+         <div class="modal fade" id="overview-modal" tabindex="-1" role="dialog" aria-labelledby="overview-modalCenterTitle" aria-hidden="true">
+            <div class=" " role="document">
+               <div class="modal-content" style="width:1000px; margin:1px auto;">
+                  <div class="modal-header align_center">
+                     <h3 class="modal-title align_center" id="overview-modalLongTitle" style="display:inline-block;">About this Visualization</h3>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+                     <p> 
+                        You are about to view an interactive visualization, which sheds light on the issue of sexual harassment in academia.
+                        The visualization shows a subset of the dataset collected through an anonymous online survey “Sexual Harassment in the Academy”. 
+                        Thanks to <strong> Dr. Karen Kelsky </strong>, for starting the survey that gives victims of sexual harassment in academia a space to voluntarily report their assault/incident. 
+                        More than 2000 testimonies have been collected since the launch of the survey in late 2017. The dataset includes information like description of incident, rank of the victim and harasser, victim’s field of study, victim's institute type, 
+                         gender of the harasser, and other details. This data is highly personal and sensitive.
+                     </p>
+                     <div class="legend-part">
+                        <h4 class= "align_center" style = "margin-bottom:-6;color:blue;position:relative;"> Learn how to read the visualization</h4>
+                        <div class="align_center">
+                           <img class="" src="image/modal_legend1.svg" alt="example1" width="420px" height="" />
+                           <img class="" src="image/modal_legend2.svg" alt="example2" width="145px" height="" />
+                        </div>
+                        <h6 style="padding:0 100px; font-weight:700;margin-top:0;">Example - This representation corresponds to an incident where  an undergraduate student studying in the field of study “Humanities” was harassed by a staff of gender “Other”.
+                           The relatively large size of the representation means that the victim has reported the incident with many details. These details can be seen by clicking on the incident (circle or polygon).
+                        </h6>
+                        <p>
+                           <strong> Note: </strong>
+                           <i>The Harasser's gender is known, but the victim's gender is not explicitly known. A victim might have chosen to reveal their gender in the incident description or not.
+                           </i>
+                           <i>The rank of the Victim and Harasser is either Undergraduate Student, Graduate Student, Staff (non-faculty), Faculty, Chari/head/dean in the vizualization. A chair/head/dean manages all students, faculty, or the entire department.
+                           </i>
+                        </p>
+                        <p style="margin-top:6px;">The right-hand side panel of the interface shows the complete legend for reading the visualization.
+                        </p>
+                     </div>
+                     <div class="interaction-part">
+                        <h4 class= "align_center" style = "color:blue;margin-top:6px;">Learn how to interact with the visualization</h4>
+                        <ul>
+                           <li>
+                              By clicking on an incident (circle or polygon), you will see details of the incident the victim reported on the left-hand-side panel of the interface. To exit the details mode, click anywhere on the white screen near incidents/circles.
+                           </li>
+                           <li>
+                              Hover anywhere on an incident (circle or polygon) to see the key details.
+                           </li>
+                           <li>Use the grey buttons at the top of the visualization to group the visualization by victim field of study, victim rank, harasser rank, harasser type, and institute type. </li>
+                           <li>To reset the visualization, click on the Reset button at the top of the visualization. </li>
+                           <li style="margin-bottom:0">Click the <img src= "image/about.png" alt="?" width = "23px"/> button in the top-right corner of the interface to access this information again.</li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="modal-footer">
+                     <span class="important">Apply what you just learned to answer the visualization-related questions you'll be seeing next.</span>
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">View Visualization</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Viz Interaction instructions Modal -->
+         <div class="modal fade" id="viz_interaction-modal" tabindex="-1" role="dialog" aria-labelledby="viz_interactionCenterTitle" aria-hidden="true">
+            <div class="" role="document" >
+               <div class="modal-content" style="width:700px; margin:120px auto;" >
+                  <div class="modal-header align_center">
+                     <h3 class="modal-title align_center" id="overview-modalLongTitle" style="display:inline-block;">Tell us what you learn !</h3>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+                     <p>Let's continue exploring the visualization. Please spend <strong> a few minutes </strong> interacting with the  visualization in any way you like. 
+                        <span class="important">Side by side with your exploration write your findings in the text box below the visualization.</span> 
+                        Let us know what you learn or what interesting pattern you discover while interacting with the visualization.
+                     </p>
+                     <p>Remember that you can compare reported incidents of sexual harassment by grouping the incidents based on <strong> field of study, victim institute type, Victim Rank, Harasser Rank, 
+                        and Harasser gender </strong> using the gray buttons at the top. You can also click on an incident (circle or polygon) to view the details of the reported incident on the left-hand-side panel of the visualization.
+                     </p>
+                     <p>To access the explanations on how to read and interact with the visualization, please click on the <img src= "image/about.png" width = "23px" alt="?"/>   button in the top-right corner of the interface. 
+                     </p>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">View Visualization</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- script to record the interaction clicks -->
+      <script>
+        function count_clicks(id) {
+           switch (id) {
+             case 'cleantarget_new':
+             $('#victim_status_clicks_pre').val((Number($('#victim_status_clicks').val()) + 1))
+             $('#victim_status_clicks').val((Number($('#victim_status_clicks').val()) + 1))
+               break;
+
+             case 'perpetrator_new':
+             $('#harasser_status_clicks_pre').val((Number($('#harasser_status_clicks').val()) + 1))
+             $('#harasser_status_clicks').val((Number($('#harasser_status_clicks').val()) + 1))
+               break;
+
+             case 'gendersquash':
+             $('#h_gender_clicks_pre').val((Number($('#h_gender_clicks').val()) + 1))
+             $('#h_gender_clicks').val((Number($('#h_gender_clicks').val()) + 1))
+               break;
+
+             case 'itype':
+             $('#itype_clicks_pre').val((Number($('#h_gender_clicks').val()) + 1))
+             $('#itype_clicks').val((Number($('#h_gender_clicks').val()) + 1))
+               break;
+
+             case 'cleandiscipline_new':
+             $('#discipline_clicks_pre').val((Number($('#discipline_clicks').val()) + 1))
+             $('#discipline_clicks').val((Number($('#discipline_clicks').val()) + 1))
+               break;
+
+             case 'all':
+             $('#reset_clicks_pre').val((Number($('#reset_clicks').val()) + 1))
+             $('#reset_clicks').val((Number($('#reset_clicks').val()) + 1))
+
+         $('#d3-tip span').remove();
+         d3.selectAll('.flower').style('opacity', 1);
+               break;
+             default:
+               console.log('pass');
+           }
+         }
+      </script>
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <!-- Latest compiled JavaScript -->
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script src="https://d3js.org/d3.v5.min.js"></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.js'></script>
+      <script src="script/d3-tip.js"></script>
+      <script type="text/javascript" src="script/forms.js"></script>
+      <script type="text/javascript" src="script/abstract_viz.js"></script>
+      <script type="text/javascript" src="script/main.js"></script>
+   </body>
+</html>
