@@ -208,7 +208,7 @@ var victim = flowers.selectAll('.polygon')
     .attr('points', function(d) {
         return d.path
     })
-   
+    var stories_clicked_pre = [];
     var stories_clicked = [];
     // function to select and deselect story
     function animate(d, selected_flower) {
